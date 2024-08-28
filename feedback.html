@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VJTI Canteen Menu</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/7a4b62b0a4.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav>
+        <div class="navigation container">
+            <div class="logo_container">
+                <img src="logo.png" alt="logo" />
+            </div>
+            <div class="bar_icon">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div><a href="index.html" class="no-underline">Home</a></div>
+            <div><a href="about.html" class="no-underline">About Us</a></div>
+            <div><a href="menu.html" class="no-underline">Menu</a></div>
+            <div><a href="address.html" class="no-underline">Address</a></div>
+            <div><a href="contact.html" class="no-underline">Contact Us</a></div>
+        </div>
+    </nav>
+    <!-- Product Reviews Section -->
+    <div class="reviews-section">
+        <h2>Product Reviews</h2>
+
+        <!-- Example Review -->
+        <div class="review-item">
+            <div class="review-header">
+                <strong>Vada Pav</strong> - <span class="rating">★★★★☆</span>
+            </div>
+            <p class="review-text">"Delicious and spicy! Perfect for a quick snack."</p>
+            <p class="reviewer-name">- by John Doe</p>
+        </div>
+
+        <!-- Add a Review Form -->
+        <div class="add-review">
+            <h3>Leave a Review</h3>
+            <form id="review-form">
+                <label for="item-select">Select Item:</label>
+                <select id="item-select">
+                <option value="vada-pav">Vada Pav</option>
+                <option value="masala-dosa">Masala Dosa</option>
+                <!-- Add more items as needed -->
+            </select>
+
+                <label for="rating-select">Rating:</label>
+                <select id="rating-select">
+                <option value="5">★★★★★</option>
+                <option value="4">★★★★☆</option>
+                <option value="3">★★★☆☆</option>
+                <option value="2">★★☆☆☆</option>
+                <option value="1">★☆☆☆☆</option>
+            </select>
+
+                <label for="review-text">Review:</label>
+                <textarea id="review-text" rows="4" placeholder="Write your review here..."></textarea>
+
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Canteen Feedback Section -->
+    <div class="feedback-section">
+        <h2>Canteen Feedback</h2>
+
+        <!-- Example Feedback -->
+        <div class="feedback-item">
+            <p>"The canteen has a great variety of food, and the service is quick. However, the seating area could be cleaner."</p>
+            <p class="reviewer-name">- by Jane Doe</p>
+        </div>
+
+        <!-- Add Feedback Form -->
+        <div class="add-feedback">
+            <h3>Leave Feedback</h3>
+            <form id="feedback-form">
+                <label for="feedback-text">Your Feedback:</label>
+                <textarea id="feedback-text" rows="4" placeholder="Share your experience..."></textarea>
+
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
