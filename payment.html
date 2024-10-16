@@ -110,12 +110,15 @@
             margin-bottom: 20px;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
     <div class="container">
         <h1>Payment Page</h1>
-        <p>This is a dummy payment page. Please provide your details to generate the bill.</p>
+        <p>Please provide your details to generate the bill.</p>
+
 
         <!-- Customer Details Form -->
         <form id="customer-form">
@@ -167,6 +170,8 @@
             </table>
 
             <button onclick="completePayment()">Complete Payment</button>
+            <button onclick="downloadInvoice()">Download Invoice (PDF)</button>
+
         </div>
     </div>
 
@@ -191,7 +196,12 @@
         let orderData = {};
 
         // Display the cart items and calculate the total
+        // Display the cart items and calculate the total
         function displayBill() {
+            // Clear the bill items container to avoid duplication
+            billItemsContainer.innerHTML = '';
+
+            total = 0; // Reset total to 0 for recalculation
             orderData.items = [];
 
             for (const itemName in cart) {
@@ -201,11 +211,11 @@
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${itemName}</td>
-                    <td>₹${cartItem.price}</td>
-                    <td>${cartItem.quantity}</td>
-                    <td>₹${itemTotal}</td>
-                `;
+            <td>${itemName}</td>
+            <td>₹${cartItem.price}</td>
+            <td>${cartItem.quantity}</td>
+            <td>₹${itemTotal}</td>
+        `;
                 billItemsContainer.appendChild(row);
 
                 // Add each item to the orderData JSON object
@@ -221,6 +231,7 @@
             billTotalElement.textContent = total;
             orderData.totalAmount = total;
         }
+
 
         // Generate a random Order ID
         function generateOrderId() {
@@ -354,6 +365,53 @@
             // Send the JSON data to the backend
             saveOrderToBackend(orderData);
         });
+
+        function downloadInvoice() {
+            // Load jsPDF from the UMD module
+            const {
+                jsPDF
+            } = window.jspdf;
+
+            const doc = new jsPDF();
+
+            // Add title
+            doc.setFontSize(18);
+            doc.text('Invoice', 105, 20, null, null, 'center');
+
+            // Add order details
+            doc.setFontSize(12);
+            doc.text(`Order ID: ${orderData.orderId}`, 20, 30);
+            doc.text(`Order Date: ${orderData.orderDate}`, 20, 40);
+            doc.text(`Order Time: ${orderData.orderTime}`, 20, 50);
+
+            // Add customer details
+            doc.text(`Customer Name: ${orderData.customer.name}`, 20, 60);
+            doc.text(`Email: ${orderData.customer.email}`, 20, 70);
+            doc.text(`Phone: ${orderData.customer.phone}`, 20, 80);
+
+            // Add table headers
+            doc.text('Item Name', 20, 100);
+            doc.text('Price', 80, 100);
+            doc.text('Quantity', 120, 100);
+            doc.text('Total', 160, 100);
+
+            // Add table content
+            let yOffset = 110;
+            orderData.items.forEach((item) => {
+                doc.text(item.name, 20, yOffset);
+                doc.text(`₹${item.price}`, 80, yOffset);
+                doc.text(item.quantity.toString(), 120, yOffset);
+                doc.text(`₹${item.total}`, 160, yOffset);
+                yOffset += 10;
+            });
+
+            // Add total amount
+            doc.setFontSize(14);
+            doc.text(`Total Amount: ₹${orderData.totalAmount}`, 20, yOffset + 10);
+
+            // Save the PDF
+            doc.save(`invoice_${orderData.orderId}.pdf`);
+        }
     </script>
 </body>
 
